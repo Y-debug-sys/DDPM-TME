@@ -4,6 +4,10 @@ This is the github repoistory for an accurate DDPM-based traffic estimation appr
 
 Paper: 
 
+<p align="center">
+  <img src='https://github.com/Y-debug-sys/DDPM-TME//blob/overview.jpg' width=45%>
+</p>
+
 ## Abstract
 
 > Traffic matrix estimation (TME) problem has been widely researched for decades of years. Recent progresses in deep generative models offer new opportunities to tackle TME problem in a more advanced way. In this paper, we leverage the powerful ability of denoising diffusion probabilistic models (DDPMs) on distribution learning, and for the first time adopt DDPM to address the TME problem. To ensure a good performance of DDPM on learning the distributions of TMs, we design a preprocessing module to reduce the dimensions of TMs while keep the data variety of each OD flow. To improve the estimation accuracy, we parameterize the noise factors in DDPM and transform the TME problem into a gradient-descent optimization problem. Finally, we compared our method with the state-of-the-art TME methods using two real-world TM datasets, the experimental results strongly demonstrate the superiority of our method on both TM synthesis and TM estimation.
@@ -86,4 +90,4 @@ python-m main.py
 
 ## Licence
 
-Distributed under the MIT License. See [LICENCE](https://github.com/Y-debug-sys/AutoTomo/blob/main/LICENSE) for more information.
+Distributed under the MIT License. See [LICENCE](https://github.com/Y-debug-sys/DDPM-TME/blob/main/LICENSE) for more information.
