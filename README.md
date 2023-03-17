@@ -63,7 +63,7 @@ This project has been developed and tested in Python 3.7.13 and requires the fol
 
 Simple usage:
 ```bash
-python-m main.py --
+python-m main.py
 ```
 
 ## Author
