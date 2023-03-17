@@ -1,8 +1,10 @@
 # Official Implementation: "DDPM-Based Methods for Future Traffic Matrix Estimation and Synthesis"
 
-This is the github repoistory for an accurate DDPM-based traffic estimation approach implemented in pytorch.
+This is the github repoistory for an accurate DDPM-based traffic estimation approach implemented in pytorch. The implementation was transcribed from the Pytorch version of DDPM <a href="https://github.com/lucidrains/denoising-diffusion-pytorch">here</a>
 
 Paper: 
+
+<img src="./overview.jpg" width="500px"><img>
 
 ## Abstract
 
