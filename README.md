@@ -4,7 +4,7 @@ This is the github repoistory for an accurate DDPM-based traffic estimation appr
 
 Paper: 
 
-<img src="./overview.jpg" width="500px"><img>
+<img src="overview.jpg" width="500px"><img>
 
 ## Abstract
 
