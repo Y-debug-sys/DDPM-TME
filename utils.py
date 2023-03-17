@@ -9,6 +9,8 @@ from sklearn.decomposition import PCA
 
 
 def load_data(args):
+    """Load traffic and create corresponding links."""
+
     if args.dataset == "abilene":
         base = "./Dataset/Abilene"
         tm_file = os.path.join(base, "Abilene_TM.csv")
@@ -52,8 +54,16 @@ def load_data(args):
 
 
 class EarlyStopping:
+    """Early stops the training if link loss doesn't decrease after a given patience."""
 
     def __init__(self, var_tensor, patience=50, verbose=False):
+        """
+        Args:
+            patience (int): How long to wait after last time validation loss improved.
+                            Default: 50
+            verbose (bool): If True, prints a message for each validation loss improvement. 
+                            Default: False         
+        """
         self.patience = patience
         self.verbose = verbose
         self.counter = 0

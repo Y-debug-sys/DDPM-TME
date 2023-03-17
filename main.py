@@ -20,7 +20,13 @@ def main(args):
         nodes_num = 23
         emb_size = 12
 
-    train_flow, test_flow, test_link, rm_tensor = load_data(args)
+    """Load TMs for Training and Estimation"""
+
+    train_flow, _, test_link, rm_tensor = load_data(args)
+    test_link, rm_tensor = test_link.to(device), rm_tensor.to(device)
+    link_loader = DataLoader(test_link, batch_size=args.concur_size)
+
+    """Training"""
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     base_model = Base(dim=args.hd, channels=emb_size, dim_mults=args.dim_mults).to(device)
@@ -35,6 +41,8 @@ def main(args):
                       gradient_accumulate_every=2, results_folder=folder_name)
     trainer.train()
 
+    """Plotting"""
+
     if args.plot:
         select_id = np.random.randint(low=0, high=train_flow.shape[0], size=(3000,))
         select_train_data = train_flow[select_id]
@@ -43,8 +51,7 @@ def main(args):
         visualization(ori_data=select_train_data.cpu().detach().numpy(),
                       generated_data=sampled_flow.cpu().detach().numpy(), analysis=args.visualize)
 
-    test_link, rm_tensor = test_link.to(device), rm_tensor.to(device)
-    link_loader = DataLoader(test_link, batch_size=args.concur_size)
+    """TM Estimation"""
 
     TME(trainer.model, trainer.preprocess_model, emb_size, link_loader, rm_tensor, nodes_num, args)
 
