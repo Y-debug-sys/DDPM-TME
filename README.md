@@ -61,9 +61,14 @@ This project has been developed and tested in Python 3.7.13 and requires the fol
 
 ## How to use
 
-Simple usage:
+Abilene Dataset Test:
 ```bash
-python-m main.py
+python-m run_abilene.py
+```
+
+G´EANT Dataset Test:
+```bash
+python-m run_geant.py
 ```
 
 ## Author
