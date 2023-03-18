@@ -7,7 +7,7 @@ from torch import nn
 from utils import EarlyStopping
 
 
-def TME(model_1, model_2, emb_size, link_loader, rm_tensor, nodes_num, args):
+def TME(model_1, model_2, link_loader, rm_tensor, args):
     device = model_1.alphas_cumprod.device
 
     if args.loss_func_2 == "l1":
@@ -22,14 +22,14 @@ def TME(model_1, model_2, emb_size, link_loader, rm_tensor, nodes_num, args):
     model_1.requires_grad_(False)
     model_2.requires_grad = False
 
-    predict_flows = np.empty([0, nodes_num * nodes_num])
+    predict_flows = np.empty([0, args.nodes_num * args.nodes_num])
 
     for _, link_tensor in enumerate(link_loader):
         concur_size = link_tensor.shape[0]
 
         # select a good initial point
 
-        noise = torch.empty(concur_size, args.st, emb_size, emb_size).to(device)
+        noise = torch.empty(concur_size, args.st, args.emb_size, args.emb_size).to(device)
         sampled_noise, sampled_flow = model_1.sample(batch_size=args.init_num)
         sampled_noise = torch.from_numpy(np.array([item.cpu().detach().numpy() for item in sampled_noise])).to(device)
         sampled_flow = model_2.recover(sampled_flow)
@@ -44,7 +44,7 @@ def TME(model_1, model_2, emb_size, link_loader, rm_tensor, nodes_num, args):
             initial_loss = torch.mean(initial_loss, dim=1)
 
             if args.regularize:
-                mid_loss = torch.square(sampled_noise).reshape(args.st, -1, emb_size * emb_size)
+                mid_loss = torch.square(sampled_noise).reshape(args.st, -1, args.emb_size * args.emb_size)
                 mid_loss = mid_loss.mean(dim=0).mean(dim=-1)
                 initial_loss += args.lamb / concur_size * mid_loss
 
@@ -55,7 +55,6 @@ def TME(model_1, model_2, emb_size, link_loader, rm_tensor, nodes_num, args):
         print("Done.")
 
         # estimate test flow
-        
         noise = nn.Parameter(noise, requires_grad=True)
         optimizer = Adam([noise], lr=lr)
         scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[25, 50, 150], gamma=0.5)

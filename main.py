@@ -13,12 +13,7 @@ from utils import visualization
 
 def main(args):
 
-    if args.dataset == "abilene":
-        nodes_num = 12
-        emb_size = 8
-    else:
-        nodes_num = 23
-        emb_size = 12
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     """Load TMs for Training and Estimation"""
 
@@ -28,12 +23,11 @@ def main(args):
 
     """Training"""
 
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    base_model = Base(dim=args.hd, channels=emb_size, dim_mults=args.dim_mults).to(device)
-    diffusion = DDPM(base_model, seq_length=emb_size, timesteps=args.tt, sampling_timesteps=args.st,
+    base_model = Base(dim=args.hd, channels=args.emb_size, dim_mults=tuple(args.dim_mults)).to(device)
+    diffusion = DDPM(base_model, seq_length=args.emb_size, timesteps=args.tt, sampling_timesteps=args.st,
                      beta_schedule=args.schedule, loss_type=args.loss_func_1).to(device)
-    preprocess_model = ER(in_dim=nodes_num * nodes_num, hidden_size=emb_size * emb_size,
-                          out_dim=nodes_num * nodes_num).to(device)
+    preprocess_model = ER(in_dim=args.nodes_num * args.nodes_num, hidden_size=args.emb_size * args.emb_size,
+                          out_dim=args.nodes_num * args.nodes_num).to(device)
 
     folder_name = "./Model"
     trainer = Trainer(preprocess_model, diffusion, train_flow, train_batch_size=args.batch_size,
@@ -53,7 +47,7 @@ def main(args):
 
     """TM Estimation"""
 
-    TME(trainer.model, trainer.preprocess_model, emb_size, link_loader, rm_tensor, nodes_num, args)
+    TME(trainer.model, trainer.preprocess_model, link_loader, rm_tensor, args)
 
 
 if __name__ == "__main__":

@@ -73,6 +73,7 @@ class Trainer(object):
         device = self.device
 
         """First, train embedding and recovery network."""
+        
         print("Start Embedding Network Training.")
 
         with tqdm(initial=self.step, total=self.pre_epoch) as pbar:

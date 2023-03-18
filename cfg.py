@@ -23,8 +23,8 @@ def parse_args():
     parser.add_argument('--dataset', type=str, default="abilene",
                         choices=["abilene", "geant"],
                         help="Dataset")
-    parser.add_argument('--dim_mults', type=tuple, default=(1, 2, 4),
-                        help="Dimensional Multiple")
+    parser.add_argument('--dim_mults', type=int, default=[1, 2, 4],
+                        nargs='+', help="Dimensional Multiple")
     parser.add_argument('--lr_1', type=float, default=1e-4,
                         help="Training Learning Rate")
     parser.add_argument('--lr_2', type=float, default=4e-2,
@@ -42,7 +42,7 @@ def parse_args():
                         help="Adding a Regularization Term or not")
     parser.add_argument('--plot', type=bool, default=True,
                         help="Plotting Similarity Comparision")
-    parser.add_argument('--visualize', type=str, default="pca",
+    parser.add_argument('--visualize', type=str, default="tsne",
                         choices=["tsne", "pca"],
                         help="Plotting t-SNE or PCA")
     parser.add_argument('--lamb', type=int, default=1e-4,
@@ -51,6 +51,10 @@ def parse_args():
                         help="Initial Point Searching Epochs")
     parser.add_argument('--pre_ep', type=int, default=10000,
                         help="Pre-training Epochs of Embedding-Recovery Network")
+    parser.add_argument('--nodes_num', type=int, default=12,
+                        help="Number of nodes in dataset")
+    parser.add_argument('--emb_size', type=int, default=8,
+                        help="Size of embedding space")
 
     args = parser.parse_args()
     return args
