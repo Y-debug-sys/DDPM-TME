@@ -2,7 +2,7 @@
 
 This is the github repoistory for an accurate DDPM-based traffic estimation approach implemented in pytorch. The implementation was transcribed from the Pytorch version of <a href="https://github.com/lucidrains/denoising-diffusion-pytorch">DDPM</a>
 
-Paper: 
+Paper: Traffic Matrix Estimation based on Denoising Diffusion Probabilistic Model
 
 ## Abstract
 
