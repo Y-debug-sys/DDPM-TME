@@ -45,7 +45,7 @@ def parse_args():
     parser.add_argument('--visualize', type=str, default="tsne",
                         choices=["tsne", "pca"],
                         help="Plotting t-SNE or PCA")
-    parser.add_argument('--lamb', type=int, default=1e-4,
+    parser.add_argument('--lamb', type=float, default=1e-4,
                         help="Lambda")
     parser.add_argument('--init_num', type=int, default=1000,
                         help="Initial Point Searching Epochs")
